@@ -1,4 +1,5 @@
 #------stage1------
+FROM node:12.18.1 AS builder
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install --production
