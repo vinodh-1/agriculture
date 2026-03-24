@@ -2,43 +2,45 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_USER = "surya8442"
-        IMAGE_NAME = "two_webapp"
-        IMAGE_TAG = "0.1"
+        DOCKER_USER = "vinodh21"
+        IMAGE_NAME = "agriculture"
+        IMAGE_TAG = "latest"
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Surya8442/nextjs-nodejs-example.git'
+                git branch: 'main', url: 'https://github.com/vinodh-1/agriculture.git'
             }
         }
 
         stage('Build Image') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
 
         stage('Push to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Docker_cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh '''
+                withCredentials([usernamePassword(credentialsId: 'Docker_CRED', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh """
                     echo "$PASS" | docker login -u "$USER" --password-stdin
                     docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                     docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                    '''
+                    """
                 }
             }
         }
 
-        stage('Run Container') {
+        stage('Deploy to Kubernetes') {
             steps {
-                sh 'docker rm -f two_webapp || true'
-                sh 'docker run -d -p 5222:8080 --name take_it ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}'
+                sh """
+                export KUBECONFIG=/var/lib/jenkins/.kube/config
+                kubectl apply -f agriculture.yml
+                """
             }
         }
-
     }
 }
+
