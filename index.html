@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DevOps AI Assistant</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    width:600px;
+    background:white;
+    color:black;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0px 10px 30px rgba(0,0,0,0.3);
+}
+
+h1{
+    text-align:center;
+    color:#2a5298;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #2a5298;
+    font-size:16px;
+}
+
+button{
+    margin-top:10px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#2a5298;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1e3c72;
+}
+
+.result{
+    margin-top:20px;
+    padding:20px;
+    background:#f2f6ff;
+    border-radius:10px;
+    min-height:80px;
+}
+
+.suggestions{
+    margin-top:15px;
+}
+
+.suggestions span{
+    display:inline-block;
+    background:#e0e7ff;
+    margin:5px;
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.suggestions span:hover{
+    background:#c7d2fe;
+}
+
+footer{
+    text-align:center;
+    margin-top:15px;
+    font-size:12px;
+    color:gray;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🤖 DevOps AI Assistant</h1>
+
+<input type="text" id="searchBox" placeholder="Ask a DevOps question...">
+
+<button onclick="searchDevOps()">Search</button>
+
+<div class="result" id="result">
+Ask something like: <b>What is DevOps?</b>
+</div>
+
+<div class="suggestions">
+
+<b>Popular questions:</b>
+
+<span onclick="quickSearch('what is devops')">DevOps</span>
+<span onclick="quickSearch('what is docker')">Docker</span>
+<span onclick="quickSearch('what is jenkins')">Jenkins</span>
+<span onclick="quickSearch('what is kubernetes')">Kubernetes</span>
+<span onclick="quickSearch('what is terraform')">Terraform</span>
+<span onclick="quickSearch('what is ansible')">Ansible</span>
+
+</div>
+
+<footer>
+DevOps AI Search Tool
+</footer>
+
+</div>
+
+<script>
+
+const devopsIndex = {
+
+"what is devops": "DevOps is a set of practices that combines software development and IT operations to shorten development lifecycle and deliver high quality software continuously.",
+
+"ci/cd": "CI/CD stands for Continuous Integration and Continuous Deployment. It automates building, testing and deploying applications.",
+
+"what is git": "Git is a distributed version control system used to track changes in source code during development.",
+
+"what is github": "GitHub is a cloud platform that hosts Git repositories and enables collaboration.",
+
+"what is jenkins": "Jenkins is an open source automation server used to build, test and deploy applications automatically.",
+
+"what is docker": "Docker is a containerization platform that packages applications with their dependencies into containers.",
+
+"what is kubernetes": "Kubernetes is an open source container orchestration platform used to manage and scale containers.",
+
+"what is container": "A container is a lightweight package that includes application code and dependencies.",
+
+"what is docker image": "A Docker image is a template used to create containers.",
+
+"what is dockerfile": "A Dockerfile is a script that contains instructions to build Docker images.",
+
+"what is terraform": "Terraform is an Infrastructure as Code tool used to create and manage cloud infrastructure.",
+
+"what is ansible": "Ansible is an automation tool used for configuration management and deployment.",
+
+"what is monitoring": "Monitoring means continuously observing systems to detect performance issues.",
+
+"what is prometheus": "Prometheus is an open source monitoring and alerting tool.",
+
+"what is grafana": "Grafana is a visualization tool used to display monitoring metrics.",
+
+"what is aws": "AWS is a cloud platform providing servers, storage and computing services.",
+
+"what is azure": "Azure is Microsoft's cloud computing platform.",
+
+"what is gcp": "GCP is Google’s cloud platform used for building applications."
+
+}
+
+function searchDevOps(){
+
+let query = document.getElementById("searchBox").value.toLowerCase().trim()
+
+let resultBox = document.getElementById("result")
+
+if(devopsIndex[query]){
+
+resultBox.innerHTML = "<b>Answer:</b><br><br>" + devopsIndex[query]
+
+}
+
+else{
+
+resultBox.innerHTML = "❌ Sorry, I don't know that yet. Try another DevOps question."
+
+}
+
+}
+
+function quickSearch(question){
+
+document.getElementById("searchBox").value = question
+
+searchDevOps()
+
+}
+
+</script>
+
+</body>
+</html>
