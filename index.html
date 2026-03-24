@@ -2,197 +2,272 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DevOps AI Assistant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriSmart Pro</title>
 
 <style>
-
-body{
+body {
+    margin: 0;
     font-family: Arial;
-    background: linear-gradient(135deg,#1e3c72,#2a5298);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+    background: #eef7ee;
 }
 
-.container{
-    width:600px;
-    background:white;
-    color:black;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0px 10px 30px rgba(0,0,0,0.3);
+header {
+    background: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854') center/cover;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
 }
 
-h1{
-    text-align:center;
-    color:#2a5298;
+header h1 {
+    font-size: 40px;
 }
 
-input{
-    width:100%;
-    padding:15px;
-    border-radius:10px;
-    border:2px solid #2a5298;
-    font-size:16px;
+nav {
+    background: #2e7d32;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-button{
-    margin-top:10px;
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#2a5298;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
+nav button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 15px;
+    cursor: pointer;
 }
 
-button:hover{
-    background:#1e3c72;
+nav button:hover {
+    background: #1b5e20;
 }
 
-.result{
-    margin-top:20px;
-    padding:20px;
-    background:#f2f6ff;
-    border-radius:10px;
-    min-height:80px;
+.section {
+    display: none;
+    padding: 20px;
 }
 
-.suggestions{
-    margin-top:15px;
+.active {
+    display: block;
 }
 
-.suggestions span{
-    display:inline-block;
-    background:#e0e7ff;
-    margin:5px;
-    padding:6px 10px;
-    border-radius:8px;
-    cursor:pointer;
+.card {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
 }
 
-.suggestions span:hover{
-    background:#c7d2fe;
+img.crop {
+    width: 100%;
+    border-radius: 10px;
 }
 
-footer{
-    text-align:center;
-    margin-top:15px;
-    font-size:12px;
-    color:gray;
+input, select {
+    padding: 8px;
+    margin: 5px;
+    width: 200px;
 }
 
+button.action {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button.action:hover {
+    background: #2e7d32;
+}
+
+footer {
+    background: #2e7d32;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<header>
+<h1>🌱 AgriSmart Pro</h1>
+<p>Modern Agriculture Dashboard</p>
+</header>
 
-<h1>🤖 DevOps AI Assistant</h1>
+<nav>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('profile')">Profile</button>
+<button onclick="showSection('crops')">Crops</button>
+<button onclick="showSection('weather')">Weather</button>
+<button onclick="showSection('tools')">Tools</button>
+</nav>
 
-<input type="text" id="searchBox" placeholder="Ask a DevOps question...">
-
-<button onclick="searchDevOps()">Search</button>
-
-<div class="result" id="result">
-Ask something like: <b>What is DevOps?</b>
+<!-- HOME -->
+<div id="home" class="section active">
+<div class="card">
+<h2>Welcome 👨‍🌾</h2>
+<p>Smart farming tools to boost productivity.</p>
+<img class="crop" src="https://images.unsplash.com/photo-1560493676-04071c5f467b">
+</div>
 </div>
 
-<div class="suggestions">
+<!-- PROFILE -->
+<div id="profile" class="section">
+<div class="card">
+<h2>Farmer Profile</h2>
+<input type="text" id="name" placeholder="Enter your name">
+<button class="action" onclick="saveName()">Save</button>
+<p id="savedName"></p>
+</div>
+</div>
 
-<b>Popular questions:</b>
+<!-- CROPS -->
+<div id="crops" class="section">
 
-<span onclick="quickSearch('what is devops')">DevOps</span>
-<span onclick="quickSearch('what is docker')">Docker</span>
-<span onclick="quickSearch('what is jenkins')">Jenkins</span>
-<span onclick="quickSearch('what is kubernetes')">Kubernetes</span>
-<span onclick="quickSearch('what is terraform')">Terraform</span>
-<span onclick="quickSearch('what is ansible')">Ansible</span>
+<div class="card">
+<h2>Crop Suggestion</h2>
+
+<select id="season">
+<option value="">Select Season</option>
+<option value="Kharif">Kharif</option>
+<option value="Rabi">Rabi</option>
+</select>
+
+<button class="action" onclick="suggestCrop()">Suggest</button>
+<p id="cropResult"></p>
+</div>
+
+<div class="card">
+<h3>Popular Crops</h3>
+
+<img class="crop" src="https://images.unsplash.com/photo-1598514982201-8f7b4b1a0b59">
+<p>🌾 Rice</p>
+
+<img class="crop" src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b">
+<p>🌽 Maize</p>
+
+<img class="crop" src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3">
+<p>🌱 Wheat</p>
+
+</div>
+
+</div>
+
+<!-- WEATHER -->
+<div id="weather" class="section">
+<div class="card">
+<h2>Weather Checker</h2>
+
+<input type="text" id="city" placeholder="Enter city">
+<button class="action" onclick="getWeather()">Check</button>
+
+<p id="weatherResult"></p>
+
+<img class="crop" src="https://images.unsplash.com/photo-1501973801540-537f08ccae7b">
+</div>
+</div>
+
+<!-- TOOLS -->
+<div id="tools" class="section">
+
+<div class="card">
+<h2>Fertilizer Calculator</h2>
+<input type="number" id="land" placeholder="Acres">
+<button class="action" onclick="calculateFertilizer()">Calculate</button>
+<p id="fertResult"></p>
+</div>
+
+<div class="card">
+<h2>Water Reminder</h2>
+<button class="action" onclick="waterReminder()">Start Reminder</button>
+</div>
+
+<div class="card">
+<h2>Profit Estimator</h2>
+<input type="number" id="income" placeholder="Income">
+<input type="number" id="expense" placeholder="Expense">
+<button class="action" onclick="calculateProfit()">Calculate</button>
+<p id="profitResult"></p>
+</div>
 
 </div>
 
 <footer>
-DevOps AI Search Tool
+<p>© 2026 AgriSmart Pro</p>
 </footer>
 
-</div>
-
 <script>
-
-const devopsIndex = {
-
-"what is devops": "DevOps is a set of practices that combines software development and IT operations to shorten development lifecycle and deliver high quality software continuously.",
-
-"ci/cd": "CI/CD stands for Continuous Integration and Continuous Deployment. It automates building, testing and deploying applications.",
-
-"what is git": "Git is a distributed version control system used to track changes in source code during development.",
-
-"what is github": "GitHub is a cloud platform that hosts Git repositories and enables collaboration.",
-
-"what is jenkins": "Jenkins is an open source automation server used to build, test and deploy applications automatically.",
-
-"what is docker": "Docker is a containerization platform that packages applications with their dependencies into containers.",
-
-"what is kubernetes": "Kubernetes is an open source container orchestration platform used to manage and scale containers.",
-
-"what is container": "A container is a lightweight package that includes application code and dependencies.",
-
-"what is docker image": "A Docker image is a template used to create containers.",
-
-"what is dockerfile": "A Dockerfile is a script that contains instructions to build Docker images.",
-
-"what is terraform": "Terraform is an Infrastructure as Code tool used to create and manage cloud infrastructure.",
-
-"what is ansible": "Ansible is an automation tool used for configuration management and deployment.",
-
-"what is monitoring": "Monitoring means continuously observing systems to detect performance issues.",
-
-"what is prometheus": "Prometheus is an open source monitoring and alerting tool.",
-
-"what is grafana": "Grafana is a visualization tool used to display monitoring metrics.",
-
-"what is aws": "AWS is a cloud platform providing servers, storage and computing services.",
-
-"what is azure": "Azure is Microsoft's cloud computing platform.",
-
-"what is gcp": "GCP is Google’s cloud platform used for building applications."
-
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-function searchDevOps(){
-
-let query = document.getElementById("searchBox").value.toLowerCase().trim()
-
-let resultBox = document.getElementById("result")
-
-if(devopsIndex[query]){
-
-resultBox.innerHTML = "<b>Answer:</b><br><br>" + devopsIndex[query]
-
+// PROFILE SAVE
+function saveName() {
+    let name = document.getElementById('name').value;
+    localStorage.setItem('farmerName', name);
+    document.getElementById('savedName').innerHTML = "Saved: " + name;
 }
 
-else{
-
-resultBox.innerHTML = "❌ Sorry, I don't know that yet. Try another DevOps question."
-
+// LOAD NAME
+window.onload = function() {
+    let name = localStorage.getItem('farmerName');
+    if (name) {
+        document.getElementById('savedName').innerHTML = "Welcome back, " + name;
+    }
 }
 
+// CROP SUGGESTION
+function suggestCrop() {
+    let season = document.getElementById('season').value;
+    let result = document.getElementById('cropResult');
+
+    if (season === "Kharif") {
+        result.innerHTML = "🌾 Rice, Cotton, Sugarcane";
+    } else if (season === "Rabi") {
+        result.innerHTML = "🌱 Wheat, Mustard, Barley";
+    } else {
+        result.innerHTML = "Select season!";
+    }
 }
 
-function quickSearch(question){
+// WEATHER
+function getWeather() {
+    let city = document.getElementById('city').value;
+    let result = document.getElementById('weatherResult');
 
-document.getElementById("searchBox").value = question
-
-searchDevOps()
-
+    if (city === "") {
+        result.innerHTML = "Enter city!";
+    } else {
+        result.innerHTML = "☀️ " + city + ": 32°C, Sunny (Demo)";
+    }
 }
 
+// FERTILIZER
+function calculateFertilizer() {
+    let land = document.getElementById('land').value;
+    let fert = land * 50;
+    document.getElementById('fertResult').innerHTML = fert + " kg needed";
+}
+
+// WATER REMINDER
+function waterReminder() {
+    setTimeout(() => {
+        alert("💧 Water your crops!");
+    }, 3000);
+}
+
+// PROFIT
+function calculateProfit() {
+    let income = document.getElementById('income').value;
+    let expense = document.getElementById('expense').value;
+    let profit = income - expense;
+    document.getElementById('profitResult').innerHTML = "Profit: ₹" + profit;
+}
 </script>
 
 </body>
